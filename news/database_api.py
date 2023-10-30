@@ -9,10 +9,9 @@ from flask import Flask, current_app, jsonify, request
 PATH = "stories.json"
 DATE = formatted_time = datetime.now().strftime("%a, %d %b %Y %H:%M:%S")
 app = Flask(__name__)
-load_dotenv()
 
 
-def db_connection() -> extensions.connection | None:
+def db_connection() -> extensions.connection:
     """Establish connection with the media-sentiment RDS"""
     try:
         return connect(f"dbname={environ['DBNAME']} user={environ['DBUSER']} host={environ['DBHOST']}",
@@ -130,4 +129,5 @@ def edit(id):
 
 
 if __name__ == "__main__":
+    load_dotenv()
     app.run(debug=True, host="0.0.0.0", port=5000)
