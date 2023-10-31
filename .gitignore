@@ -1,7 +1,8 @@
 .env
-venv
 .pemkey
-__pycache__
 .coverage
 .pytest_cache
 .DS_Store
+.vscode
+venv
+__pycache__
