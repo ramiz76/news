@@ -16,7 +16,7 @@ def db_connection() -> extensions.connection:
     try:
         return connect(database=environ['DBNAME'],
                        user=environ['DBUSER'],
-                       host=environ['DBHOST'],
+                       host=environ['DBIP'],
                        password=environ['DBPASS'],
                        port=environ['DBPORT'],
                        cursor_factory=extras.RealDictCursor)
