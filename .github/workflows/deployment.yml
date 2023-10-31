@@ -1,11 +1,12 @@
 name: Deploy to Staging Server
 # Only trigger when the pylint/pytest is successful.
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
+  workflow_run:
+    workflows: 
+    - "Pytest Workflow"
+    - "Pytest Workflow"
+    types:
+      - completed
 jobs:
   job1:
     uses: ./.github/workflows/pylint.yml
