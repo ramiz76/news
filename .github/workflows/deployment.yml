@@ -2,7 +2,9 @@ name: Deploy to Staging Server
 # Only trigger when the pylint/pytest is successful.
 on:
   workflow_run:
-    workflows: ["Pytest Workflow","Pylint Workflow"]
+    workflows: 
+    - "Pytest Workflow"
+    - "Pylint Workflow"
     types:
       - completed
 jobs:
