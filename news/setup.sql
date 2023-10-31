@@ -37,3 +37,4 @@ INSERT INTO votes(direction, id, created, modified) VALUES ('down', 4, DATE_TRUN
 INSERT INTO votes(direction, id, created, modified) VALUES ('down', 4, DATE_TRUNC('second', CURRENT_TIMESTAMP::timestamp),DATE_TRUNC('second', CURRENT_TIMESTAMP::timestamp));
 
 
+
