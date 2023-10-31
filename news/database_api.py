@@ -14,7 +14,11 @@ app = Flask(__name__)
 def db_connection() -> extensions.connection:
     """Establish connection with the media-sentiment RDS"""
     try:
-        return connect(f"dbname={environ['DBNAME']} user={environ['DBUSER']} host={environ['DBHOST']}",
+        return connect(database=environ['DBNAME'],
+                       user=environ['DBUSER'],
+                       host=environ['DBHOST'],
+                       password=environ['DBPASS'],
+                       port=environ['DBPORT'],
                        cursor_factory=extras.RealDictCursor)
     except DatabaseError:
         print("Error connecting to database.")
@@ -64,12 +68,9 @@ def select_stories(sort="title", order="ASC", search=""):
 def get_stories():
     args = request.args.to_dict()
     if request.method == "GET":
-        stories = ""
-        search = args.get("search")
-        sort = args.get("sort")
         order = args.get("order")
         order = "ASC" if order == "ascending" else "DESC"
-        stories = select_stories(sort, order, search)
+        stories = select_stories(args.get("sort"), order, args.get("search"))
         if stories:
             return jsonify(stories), 200
         else:
