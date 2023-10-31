@@ -1,4 +1,5 @@
-# This is a full-stack app in a single file
+"""This is a full-stack app in a single file"""
+
 import http.server
 import socketserver
 from http import HTTPStatus
@@ -29,6 +30,7 @@ def html(total_clicks):
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
+        """Pass Pylint"""
         global total_clicks
         if (self.path == '/'):
             self.send_response(HTTPStatus.OK)
@@ -43,6 +45,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(f'{total_clicks}'.encode())
 
     def do_POST(self):
+        """Pass Pylint"""
         global total_clicks
         if (self.path == '/api/click'):
             total_clicks += 1

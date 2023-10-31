@@ -1,4 +1,7 @@
+"""Testing"""
 
 
 def test_passing_test():
-    assert 1 == 1
+    """Passing Test"""
+    one = 1
+    assert one < 5

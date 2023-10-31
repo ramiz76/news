@@ -1,3 +1,5 @@
+"""Run Web Scraper using local JSON file as storage."""
+
 from datetime import datetime
 
 from flask import Flask, current_app, jsonify, request
@@ -40,21 +42,25 @@ def create_story(stories, args) -> None:
 
 @app.route("/", methods=["GET"])
 def index():
+    """Static Home Page"""
     return current_app.send_static_file("index.html")
 
 
 @app.route("/add", methods=["GET"])
 def addstory():
+    """Static Add Story Page"""
     return current_app.send_static_file("./addstory/index.html")
 
 
 @app.route("/scrape", methods=["GET"])
 def scrape():
+    """Static Web Scraping Page"""
     return current_app.send_static_file("./scrape/index.html")
 
 
 @app.route("/stories", methods=["GET", "POST"])
 def get_stories():
+    """Retrieve stories and add from JSON file"""
     stories = load_json_file(PATH)
     args = request.args.to_dict()
     if request.method == "GET":
@@ -76,7 +82,7 @@ def get_stories():
 
 @app.route("/stories/<int:id>/votes", methods=["POST"])
 def update_votes(id):
-
+    """Update story votes"""
     stories = load_json_file(PATH)
     if request.method == "POST":
         data = request.json

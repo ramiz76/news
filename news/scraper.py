@@ -1,3 +1,5 @@
+"""Using GET requests to web scrape news articles with webpages."""
+
 from requests import get
 from bs4 import BeautifulSoup
 
@@ -11,6 +13,7 @@ def request_news_html(url) -> BeautifulSoup:
 
 
 def extract_stories_href(html):
+    """Extract HREF data from HTML data."""
     stories = html.find(
         'ul', class_="ssrcss-18so414-Grid e12imr580").find_all('li')
     stories = [story.find(

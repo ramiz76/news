@@ -1,3 +1,5 @@
+"""Run Web Scraper using database as storage."""
+
 from datetime import datetime
 from os import environ
 from dotenv import load_dotenv
@@ -36,16 +38,19 @@ def create_story(args) -> None:
 
 @app.route("/", methods=["GET"])
 def index():
+    """Static Home Page"""
     return current_app.send_static_file("index.html")
 
 
 @app.route("/add", methods=["GET"])
 def addstory():
+    """Static Add Story Page"""
     return current_app.send_static_file("./addstory/index.html")
 
 
 @app.route("/scrape", methods=["GET"])
 def scrape():
+    """Static Web Scraping Page"""
     return current_app.send_static_file("./scrape/index.html")
 
 
@@ -85,6 +90,7 @@ def get_stories():
 
 @app.route("/stories/<int:id>/votes", methods=["POST"])
 def update_votes(id):
+    """Increment/Decrement score of story by one in response to user input."""
     data = request.json
     if request.method == "POST":
         stories = select_stories()
@@ -94,12 +100,14 @@ def update_votes(id):
         with db_connection() as conn:
             with conn.cursor() as cur:
                 cur.execute("""
-                            INSERT INTO votes (id, direction, created, modified) VALUES (%s,%s,%s,%s);""", [id, data.get("direction"), DATE, DATE])
+                            INSERT INTO votes (id, direction, created, modified) VALUES (%s,%s,%s,%s);""",
+                            [id, data.get("direction"), DATE, DATE])
                 conn.commit()
     return jsonify({"error": False, "message": "Score Updated"}), 200
 
 
 def patch_story(data, id):
+    """Edit specified story with new title and url in database."""
     with db_connection() as conn:
         with conn.cursor() as cur:
             cur.execute("""
@@ -109,6 +117,7 @@ def patch_story(data, id):
 
 
 def delete_story(id: int):
+    """Delete specified story from database"""
     with db_connection() as conn:
         with conn.cursor() as cur:
             cur.execute("""DELETE FROM stories WHERE id = %s""", [id])
@@ -118,6 +127,7 @@ def delete_story(id: int):
 
 @app.route("/stories/<int:id>", methods=["PATCH", "DELETE"])
 def edit(id):
+    """User response to editing/deleting stories."""
     if request.method == "PATCH":
         edit_request = request.json
         if not (edit_request["title"] and edit_request["url"]):
