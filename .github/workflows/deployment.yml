@@ -1,5 +1,5 @@
 name: Deploy to EC2 Instance
-# Only trigger when the pylint/pytest is successful.
+# Only trigger deploy when the pylint/pytest is successful.
 on:
   push:
     branches: [ "main" ]
@@ -7,12 +7,12 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 jobs:
-  job1:
+  pylint:
     uses: ./.github/workflows/pylint.yml
-  job2:
+  pytest:
     uses: ./.github/workflows/pytest.yml
   job3:
-    needs: [job1,job2] 
+    needs: [pylint,pytest] 
     runs-on: ubuntu-latest  
     steps:
     - uses: actions/checkout@v3
